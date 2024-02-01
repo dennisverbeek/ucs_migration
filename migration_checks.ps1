@@ -145,7 +145,7 @@ if ($null -eq $fcports) {
 Write-Host "Checking supported servers "
 
 # Define the list of supported models
-$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5", "UCSC-C220-M3", "UCSC-C220-M4")
+$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5", "UCSC-C220-M3", "UCSC-C220-M4", "UCSC-C240-M3S", "UCSC-C220-M5SX", "UCSC-C240-M4SX","UCSC-C240-M5S")
 
 # Retrieve all servers and their models
 $servers = Get-UcsServer | Select-Object Model
@@ -180,7 +180,7 @@ if ($unsupportedModels.Count -gt 0) {
 Write-Host "Checking supported IOM "
 
 # Define the list of supported models
-$supportediomModels = @("UCS-IOM-2208XP", "UCS-IOM-2204XP")
+$supportediomModels = @("UCS-IOM-2208XP", "UCS-IOM-2204XP", "N2K-C2232PP-10GE")
 
 # Retrieve all servers and their models
 $iom =  get-ucsiom | Select-Object model

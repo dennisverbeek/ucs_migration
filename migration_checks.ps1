@@ -6,6 +6,18 @@ $credentials = New-Object System.Management.Automation.PSCredential($username, $
 
 $null = Connect-Ucs -Name $ucsManagerAddress -Credential $credentials -ErrorAction SilentlyContinue
 
+# Checking Swithing mode
+
+Write-Host -NoNewline "Checking Switching mode "
+
+$switchingmode = Get-UcsLanCloud | Select-Object -ExpandProperty Mode
+
+if ($switchingmode -eq "end-host") {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
+
 # Checking reserved VLANs
 Write-Host -NoNewline "Checking reserved VLANs... "
 $vlans = Get-UcsVlan | Where-Object {

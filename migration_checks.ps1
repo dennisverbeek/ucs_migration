@@ -114,5 +114,15 @@ if ($null -eq $dynamicvnic) {
     Write-Host "X" -ForegroundColor Red
 }
 
+# Checking if FC ports are in use
+Write-Host -NoNewline "Checking if FC ports are in use "
+$fcports = Get-UcsFiFcPort
+
+if ($null -eq $fcports) {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

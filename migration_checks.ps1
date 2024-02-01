@@ -98,7 +98,17 @@ if ($macSecurityConfigs) {
 Write-Host -NoNewline "Checking VMM Intergration "
 $vmmintegration = Get-UcsVmVcenter
 
-if ($vmmintegration -eq $null) {
+if ($null -eq $vmmintegration) {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
+
+# Checking Dynamic vNIC Connection Policies
+Write-Host -NoNewline "Checking Dynamic vNIC Connection Policies "
+$dynamicvnic = Get-UcsDynamicVnicConnPolicy
+
+if ($null -eq $dynamicvnic) {
     Write-Host ([char]8730) -ForegroundColor Green
 } else {
     Write-Host "X" -ForegroundColor Red

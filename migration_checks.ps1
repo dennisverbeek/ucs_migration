@@ -41,5 +41,16 @@ if ($linkAggPref -eq "port-channel") {
     Write-Host "N" -ForegroundColor Red
 }
 
+# Checking Multicast Hardware Hash
+Write-Host -NoNewline "Checking Multicast Hardware Hash "
+$linkAggPref = Get-UcsManagedObject -Dn "org-root/chassis-discovery" | Select-Object -ExpandProperty MulticastHwHash
+
+if ($linkAggPref -eq "disabled") {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "N" -ForegroundColor Red
+}
+
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

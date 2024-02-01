@@ -71,5 +71,30 @@ if ($netflow -eq "disabled") {
     Write-Host "X" -ForegroundColor Red
 }
 
+# Begin checking Mac Security
+Write-Host "Checking Mac Security"
+
+# Retrieve all port security configurations
+$macSecurityConfigs = Get-UcsPortSecurityConfig
+
+# Check if any configurations are returned
+if ($macSecurityConfigs) {
+    foreach ($config in $macSecurityConfigs) {
+        # Display the current port being checked
+        Write-Host -NoNewline "Port $($config.Dn) Forge setting is "
+
+        # Check the Forge property
+        if ($config.Forge -eq "allow") {
+            Write-Host ([char]8730) -ForegroundColor Green
+        } else {
+            Write-Host "X" -ForegroundColor Red
+        }
+    }
+} else {
+    Write-Host "No port security configurations found."
+}
+
+
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

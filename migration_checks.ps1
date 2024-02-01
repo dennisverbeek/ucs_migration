@@ -51,14 +51,27 @@ if ($linkAggPref -eq "disabled") {
     Write-Host "X" -ForegroundColor Red
 }
 
-# Checking Multicast Optimize
-Write-Host -NoNewline "Checking Multicast Optimize "
-$multicastoptimize = Get-UcsQosClass | select-object MulticastOptimize | Select-Object -ExpandProperty MulticastOptimize
+# Checking Multicast Optimize for each QoS Class, displaying class names and priorities
+Write-Host "Checking Multicast Optimize and Priority for each QoS Class"
 
-if ($multicastoptimize -eq "no") {
-    Write-Host ([char]8730) -ForegroundColor Green
+# Retrieve all QoS Classes with their names, Multicast Optimize setting, and Priority
+$qosClasses = Get-UcsQosClass | Select-Object Name, MulticastOptimize, Priority
+
+# Check if any QoS Classes were found
+if ($qosClasses) {
+    foreach ($qosClass in $qosClasses) {
+        # Display the name, Multicast Optimize setting, and Priority of the QoS Class
+        Write-Host -NoNewline "Multicast Optimize is set to '$($qosClass.MulticastOptimize)' for Priority: $($qosClass.Priority)... "
+        
+        # Check the MulticastOptimize property
+        if ($qosClass.MulticastOptimize -eq "no") {
+            Write-Host ([char]8730) -ForegroundColor Green
+        } else {
+            Write-Host "X" -ForegroundColor Red
+        }
+    }
 } else {
-    Write-Host "X" -ForegroundColor Red
+    Write-Host "No QoS Classes found."
 }
 
 # Checking Netflow

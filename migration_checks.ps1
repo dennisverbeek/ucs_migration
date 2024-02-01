@@ -94,7 +94,15 @@ if ($macSecurityConfigs) {
     Write-Host "No port security configurations found."
 }
 
+# Checking VMM Intergration
+Write-Host -NoNewline "Checking VMM Intergration "
+$vmmintegration = Get-UcsVmVcenter
 
+if ($vmmintegration -eq $null) {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
 
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

@@ -145,7 +145,7 @@ if ($null -eq $fcports) {
 Write-Host "Checking supported servers "
 
 # Define the list of supported models
-$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5", "UCSC-C220-M3", "UCSC-C220-M4", "UCSC-C240-M3S", "UCSC-C220-M5SX", "UCSC-C240-M4SX","UCSC-C240-M5S")
+$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5", "UCSC-C220-M3", "UCSC-C220-M4", "UCSC-C240-M3S", "UCSC-C220-M5SX", "UCSC-C240-M4SX","UCSC-C240-M5S", "UCSC-C240-M5SX", "HXAF220C-M5SX")
 
 # Retrieve all servers and their models
 $servers = Get-UcsServer | Select-Object Model

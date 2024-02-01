@@ -1,10 +1,14 @@
-# Connect to UCS Manager
-$ucsManagerAddress = "10.192.120.20"
-$username = "admin" # Replace with your UCS username
-$password = ConvertTo-SecureString "mDY64LQpxow9uFzndPOZ" -AsPlainText -Force
-$credentials = New-Object System.Management.Automation.PSCredential($username, $password)
+# Prompt for UCS Manager address
+$ucsManagerAddress = Read-Host -Prompt "Enter UCS Manager Address"
 
-$null = Connect-Ucs -Name $ucsManagerAddress -Credential $credentials -ErrorAction SilentlyContinue
+# Prompt for Username
+$username = Read-Host -Prompt "Enter your username"
+
+# Prompt for Password securely
+$credential = Get-Credential -UserName $username -Message "Enter your password"
+
+# Connect to UCS Manager with the provided credentials
+Connect-Ucs -Name $ucsManagerAddress -Credential $credential
 
 # Checking Swithing mode
 

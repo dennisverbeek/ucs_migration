@@ -61,5 +61,15 @@ if ($multicastoptimize -eq "no") {
     Write-Host "X" -ForegroundColor Red
 }
 
+# Checking Netflow
+Write-Host -NoNewline "Checking Netflow "
+$netflow = get-UcsManagedObject -ClassId FabricEthLanFlowMonitoring | Select-Object -ExpandProperty Adminstate
+
+if ($netflow -eq "disabled") {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

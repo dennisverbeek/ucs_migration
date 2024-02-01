@@ -38,7 +38,7 @@ $linkAggPref = Get-UcsManagedObject -Dn "org-root/chassis-discovery" | Select-Ob
 if ($linkAggPref -eq "port-channel") {
     Write-Host ([char]8730) -ForegroundColor Green
 } else {
-    Write-Host "N" -ForegroundColor Red
+    Write-Host "X" -ForegroundColor Red
 }
 
 # Checking Multicast Hardware Hash
@@ -48,9 +48,18 @@ $linkAggPref = Get-UcsManagedObject -Dn "org-root/chassis-discovery" | Select-Ob
 if ($linkAggPref -eq "disabled") {
     Write-Host ([char]8730) -ForegroundColor Green
 } else {
-    Write-Host "N" -ForegroundColor Red
+    Write-Host "X" -ForegroundColor Red
 }
 
+# Checking Multicast Optimize
+Write-Host -NoNewline "Checking Multicast Optimize "
+$multicastoptimize = Get-UcsQosClass | select-object MulticastOptimize | Select-Object -ExpandProperty MulticastOptimize
+
+if ($multicastoptimize -eq "no") {
+    Write-Host ([char]8730) -ForegroundColor Green
+} else {
+    Write-Host "X" -ForegroundColor Red
+}
 
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

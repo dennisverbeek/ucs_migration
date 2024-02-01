@@ -250,7 +250,7 @@ if ($unsupportedfexModels.Count -gt 0) {
 Write-Host "Checking supported Network Adapters "
 
 # Define the list of supported models
-$supportedadapterModels = @("UCSB-MLOM-40G-01", "UCS-VIC-M82-8P")
+$supportedadapterModels = @("UCSB-MLOM-40G-01", "UCS-VIC-M82-8P", "UCSC-MLOM-CSC-02", "UCSB-MLOM-40G-03", "UCSC-MLOM-C40Q-03", "UCSC-PCIE-CSC-02")
 
 # Retrieve all servers and their models
 $adapter = Get-UcsAdaptorUnit | select-object model

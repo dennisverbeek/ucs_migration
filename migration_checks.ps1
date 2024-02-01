@@ -145,7 +145,7 @@ if ($null -eq $fcports) {
 Write-Host "Checking supported servers "
 
 # Define the list of supported models
-$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5")
+$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5", "UCSC-C220-M3", "UCSC-C220-M4")
 
 # Retrieve all servers and their models
 $servers = Get-UcsServer | Select-Object Model
@@ -244,5 +244,42 @@ if ($unsupportedfexModels.Count -gt 0) {
 } else {
     Write-Host "No unsupported server models found." -ForegroundColor Green
 }
+
+
+#Checking VIC
+Write-Host "Checking supported Network Adapters "
+
+# Define the list of supported models
+$supportedadapterModels = @("UCSB-MLOM-40G-01", "UCS-VIC-M82-8P")
+
+# Retrieve all servers and their models
+$adapter = Get-UcsAdaptorUnit | select-object model
+
+# Initialize a hashtable to keep track of unsupported models and their counts
+$unsupportedadapterModels = @{}
+
+# Loop through the list of servers to identify unsupported models
+foreach ($adapter in $adapter) {
+    if (-not ($supportedadapterModels -contains $adapter.Model)) {
+        # Increment the count for the unsupported adapter model
+        if ($unsupportedadapterModels.ContainsKey($adapter.Model)) {
+            $unsupportedadapterModels[$adapter.Model]++
+        } else {
+            $unsupportedadapterModels[$adapter.Model] = 1
+        }
+    }
+}
+
+# Output summary of unsupported models
+if ($unsupportedadapterModels.Count -gt 0) {
+    Write-Host "Summary of unsupported Adapter Models:"
+    foreach ($model in $unsupportedadapterModels.Keys) {
+        Write-Host "$model $($unsupportedadapterModels[$adapter.model]) instances found" -ForegroundColor Red
+    }
+} else {
+    Write-Host "No unsupported Adapter models found." -ForegroundColor Green
+}
+
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

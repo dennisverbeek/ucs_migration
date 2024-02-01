@@ -239,7 +239,7 @@ foreach ($fex in $fex) {
 if ($unsupportedfexModels.Count -gt 0) {
     Write-Host "Summary of unsupported FEX Models:"
     foreach ($model in $unsupportedfexModels.Keys) {
-        Write-Host "$model $($unsupportedfexModels[$fex.model]) instances found" -ForegroundColor Red
+        Write-Host "$model $($unsupportedfexModels[$model]) instances found" -ForegroundColor Red
     }
 } else {
     Write-Host "No unsupported server models found." -ForegroundColor Green
@@ -274,7 +274,7 @@ foreach ($adapter in $adapter) {
 if ($unsupportedadapterModels.Count -gt 0) {
     Write-Host "Summary of unsupported Adapter Models:"
     foreach ($model in $unsupportedadapterModels.Keys) {
-        Write-Host "$model $($unsupportedadapterModels[$adapter.model]) instances found" -ForegroundColor Red
+        Write-Host "$model $($unsupportedadapterModels[$model]) instances found" -ForegroundColor Red
     }
 } else {
     Write-Host "No unsupported Adapter models found." -ForegroundColor Green

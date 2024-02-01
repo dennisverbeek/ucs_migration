@@ -26,6 +26,7 @@ The script checks the following aspects of the UCS environment:
 1. Run the script in a PowerShell environment with UCS PowerTool module installed.
 2. You will be prompted to enter the UCS Manager address, username, and password.
 3. The script will then connect to the UCS Manager and perform the checks, outputting the results.
+4. To use a local account add ucs-{name of domain}\ to your username
 
 ## Output
 

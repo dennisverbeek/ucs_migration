@@ -141,5 +141,44 @@ if ($null -eq $fcports) {
     Write-Host "X" -ForegroundColor Red
 }
 
+#Checking supported servers
+Write-Host "Checking supported servers "
+
+# Define the list of supported models
+$supportedModels = @("UCSB-B200-M3", "UCSB-B200-M4", "UCSB-B200-M5")
+
+# Retrieve all servers and their models
+$servers = Get-UcsServer | Select-Object Model
+
+# Initialize a hashtable to keep track of unsupported models and their counts
+$unsupportedModels = @{}
+
+# Loop through the list of servers to identify unsupported models
+foreach ($server in $servers) {
+    if (-not ($supportedModels -contains $server.Model)) {
+        # Increment the count for the unsupported model
+        if ($unsupportedModels.ContainsKey($server.Model)) {
+            $unsupportedModels[$server.Model]++
+        } else {
+            $unsupportedModels[$server.Model] = 1
+        }
+    }
+}
+
+# Output summary of unsupported models
+if ($unsupportedModels.Count -gt 0) {
+    Write-Host "Summary of unsupported server models:"
+    foreach ($model in $unsupportedModels.Keys) {
+        Write-Host "$model $($unsupportedModels[$model]) instances found" -ForegroundColor Red
+    }
+} else {
+    Write-Host "No unsupported server models found." -ForegroundColor Green
+}
+
+
+
+
+
+
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs

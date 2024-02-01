@@ -176,6 +176,40 @@ if ($unsupportedModels.Count -gt 0) {
 }
 
 
+#Checking IOM
+Write-Host "Checking supported IOM "
+
+# Define the list of supported models
+$supportediomModels = @("UCS-IOM-2208XP", "UCS-IOM-2204XP")
+
+# Retrieve all servers and their models
+$iom =  get-ucsiom | Select-Object model
+
+# Initialize a hashtable to keep track of unsupported models and their counts
+$unsupportediomModels = @{}
+
+# Loop through the list of servers to identify unsupported models
+foreach ($iom in $iom) {
+    if (-not ($supportediomModels -contains $iom.Model)) {
+        # Increment the count for the unsupported model
+        if ($unsupportediomModels.ContainsKey($iom.Model)) {
+            $unsupportediomModels[$iom.Model]++
+        } else {
+            $unsupportediomModels[$iom.Model] = 1
+        }
+    }
+}
+
+# Output summary of unsupported models
+if ($unsupportediomModels.Count -gt 0) {
+    Write-Host "Summary of unsupported server models:"
+    foreach ($model in $unsupportediomModels.Keys) {
+        Write-Host "$model $($unsupportediomModels[$model]) instances found" -ForegroundColor Red
+    }
+} else {
+    Write-Host "No unsupported server models found." -ForegroundColor Green
+}
+
 
 
 

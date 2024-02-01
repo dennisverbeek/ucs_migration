@@ -202,7 +202,7 @@ foreach ($iom in $iom) {
 
 # Output summary of unsupported models
 if ($unsupportediomModels.Count -gt 0) {
-    Write-Host "Summary of unsupported server models:"
+    Write-Host "Summary of unsupported IOM modules:"
     foreach ($model in $unsupportediomModels.Keys) {
         Write-Host "$model $($unsupportediomModels[$model]) instances found" -ForegroundColor Red
     }
@@ -211,8 +211,38 @@ if ($unsupportediomModels.Count -gt 0) {
 }
 
 
+#Checking Fex
+Write-Host "Checking supported FEXES "
 
+# Define the list of supported models
+$supportedfexModels = @("N2K-C2232PP-10GE")
 
+# Retrieve all servers and their models
+$fex =  get-ucsfex | Select-Object model
 
+# Initialize a hashtable to keep track of unsupported models and their counts
+$unsupportedfexModels = @{}
+
+# Loop through the list of servers to identify unsupported models
+foreach ($fex in $fex) {
+    if (-not ($supportedfexModels -contains $fex.Model)) {
+        # Increment the count for the unsupported model
+        if ($unsupportedfexModels.ContainsKey($fex.Model)) {
+            $unsupportedfexModels[$fex.Model]++
+        } else {
+            $unsupportedfexModels[$fex.Model] = 1
+        }
+    }
+}
+
+# Output summary of unsupported models
+if ($unsupportedfexModels.Count -gt 0) {
+    Write-Host "Summary of unsupported FEX Models:"
+    foreach ($model in $unsupportedfexModels.Keys) {
+        Write-Host "$model $($unsupportedfexModels[$fex.model]) instances found" -ForegroundColor Red
+    }
+} else {
+    Write-Host "No unsupported server models found." -ForegroundColor Green
+}
 # Disconnect from UCS Manager
 $null = Disconnect-Ucs
